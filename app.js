@@ -4,6 +4,7 @@ require('dotenv-extended').load()
 var restify = require('restify');
 var builder = require('botbuilder');
 var config = require('./config/config');
+const recognizeEmotion = require('./manager/dialogs/recognize-emotion')
  
 // Setup Restify Server
 const port = process.env.port || process.env.PORT || 3978
@@ -54,6 +55,10 @@ intents.matches('dados-pessoais', (session, args, next) =>{
 intents.matches('saudar', (session) =>{
     session.send('Olá, em que posso lhe ajudar?');
 });
+
+
+intents.matches('reconhecer-emocoes', recognizeEmotion);
+
 
 intents.onDefault((session, args) => {
     session.send(`Desculpe, não pude compreender **${session.message.text}**\n\nLembre-se que sou um bot e meu conhecimento é limitado. - ${config.birth_date}`)

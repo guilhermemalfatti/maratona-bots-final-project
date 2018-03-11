@@ -23,7 +23,9 @@
     "botbuilder": "^3.13.1",
     "botbuilder-azure": "^3.0.4",
     "dotenv-extended": "^2.0.1",
-    "restify": "^5.0.0"
+    "needle": "^2.2.0",
+    "restify": "^5.0.0",
+    "valid-url": "^1.0.9"
   },
   "devDependencies": {
     "request": "^2.81.0",
