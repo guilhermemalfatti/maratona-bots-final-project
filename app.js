@@ -18,6 +18,7 @@ var connector = new builder.ChatConnector({
     appId: process.env.MicrosoftAppId,
     appPassword: process.env.MicrosoftAppPassword
 });
+recognizeEmotion.connector(connector)
 
 // Listen for messages from users 
 server.post('/api/messages', connector.listen());
@@ -57,7 +58,7 @@ intents.matches('saudar', (session) =>{
 });
 
 
-intents.matches('reconhecer-emocoes', recognizeEmotion);
+intents.matches('reconhecer-emocoes', recognizeEmotion.flow);
 
 
 intents.onDefault((session, args) => {
