@@ -1,5 +1,7 @@
 const needle = require('needle')
 const moment = require('moment')
+var builder = require('botbuilder');
+require('dotenv-extended').load()
 
 const hasImageAttachment = (session) => {
     return session.message.attachments.length > 0 &&
@@ -29,9 +31,17 @@ const getImageStreamFromMessage = (message, connector) => {
     return needle.get(attachment.contentUrl, { headers: headers })
 }
 
+// Create chat connector for communicating with the Bot Framework Service
+const connector = new builder.ChatConnector({
+        appId: process.env.MicrosoftAppId,
+        appPassword: process.env.MicrosoftAppPassword
+    });
+
+
 module.exports = {
     hasImageAttachment,
     requiresToken,
     parseAnchorTag,
-    getImageStreamFromMessage
+    getImageStreamFromMessage,
+    connector
 }

@@ -5,6 +5,7 @@ var restify = require('restify');
 var builder = require('botbuilder');
 var config = require('./config/config');
 const recognizeEmotion = require('./manager/dialogs/recognize-emotion')
+var util = require('./manager/utils/utils');
  
 // Setup Restify Server
 const port = process.env.port || process.env.PORT || 3978
@@ -12,18 +13,11 @@ var server = restify.createServer();
 server.listen(port, function () {
    console.log('%s listening to %s', server.name, server.url); 
 });
-  
-// Create chat connector for communicating with the Bot Framework Service
-var connector = new builder.ChatConnector({
-    appId: process.env.MicrosoftAppId,
-    appPassword: process.env.MicrosoftAppPassword
-});
-recognizeEmotion.connector(connector)
 
 // Listen for messages from users 
-server.post('/api/messages', connector.listen());
+server.post('/api/messages', util.connector.listen());
 
-var bot = new builder.UniversalBot(connector);
+var bot = new builder.UniversalBot(util.connector);
 bot.set('storage', new builder.MemoryBotStorage())
 
 // LUIS Dialogs 
@@ -58,11 +52,11 @@ intents.matches('saudar', (session) =>{
 });
 
 
-intents.matches('reconhecer-emocoes', recognizeEmotion.flow);
+intents.matches('reconhecer-emocoes', recognizeEmotion);
 
 
 intents.onDefault((session, args) => {
-    session.send(`Desculpe, não pude compreender **${session.message.text}**\n\nLembre-se que sou um bot e meu conhecimento é limitado. - ${config.birth_date}`)
+    session.send(`Desculpe, não pude compreender **${session.message.text}**\n\nLembre-se que sou um bot e meu conhecimento é limitado.`)
 })
 
 bot.on('conversationUpdate', (update) => {

@@ -3,13 +3,8 @@ const validUrl = require('valid-url')
 const AzureEmotion = require('../services/azure-facial-api')
 const utils = require('../utils/utils')
 const config = require('../../config/config')
-var connector = undefined
 
-module.exports.connector = (conn) => {
-    connector = conn
-};
-
-module.exports.flow = [
+module.exports = [
     (session, args, next) => {
         const options = {
             listStyle: builder.ListStyle.button,
@@ -35,7 +30,7 @@ module.exports.flow = [
     (session, results) => {
         const emotionServie = new AzureEmotion()
         if(utils.hasImageAttachment(session)){
-            const stream = utils.getImageStreamFromMessage(session.message, connector)
+            const stream = utils.getImageStreamFromMessage(session.message, utils.connector)
             emotionServie.findFromStrem(stream)
                 .then(descreverSuccess(session))
                 .catch(descreverError(session))
