@@ -59,15 +59,12 @@ const descreverSuccess = (session) => {
             return session.send('Não consegui descrever essa imagem')
             
         var faces = [];
-        const emotions = result.map((item) => {
-
-            for ( property in item.faceAttributes.emotion ) {
-                if(item.faceAttributes.emotion[property] == 1){
-                    faces.push({
-                        [item.faceId]: property
-                    })
-                }
-            }
+        const emotions = result.map((item) => {            
+            var highestScore = getHighestScore(item.faceAttributes.emotion);
+            var mood = getMood(item.faceAttributes.emotion, highestScore)
+            faces.push({
+                [item.faceId]: mood
+            })            
         })
         if(faces.length > 1){
             session.send('Identifiquei mais de uma pessoa na imagem:')
