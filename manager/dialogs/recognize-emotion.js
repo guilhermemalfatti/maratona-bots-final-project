@@ -1,6 +1,7 @@
 const builder = require('botbuilder')
 const validUrl = require('valid-url')
 const AzureEmotion = require('../services/azure-facial-api')
+const AzureJoke = require('../services/joke-api')
 const utils = require('../utils/utils')
 const config = require('../../config/config')
 
@@ -81,7 +82,32 @@ const descreverSuccess = (session) => {
             session.send('Não identifiquei nenhuma pessoa nesta imagem.')
         }
 
+        var allHappy = true
+        faces.map((item) => {
+            for(property in item){
+                if(item[property] != "happiness"){
+                    allHappy = false
+                }
+            }
+        })
+//consegue descrever uma imagem?
+        if(allHappy){
+            session.send('Tenha um bom dia :)')
+        }else{
+            const jokeServie = new AzureJoke()
+            session.send('Vejo que você não esta feliz, vou contar uma piada :).')
+            jokeServie.get().then((results) =>{
+                showJoke(results, session)
+            }).catch(() =>{
+                descreverError(session)
+            })
+        }
+
     }
+}
+
+const showJoke = (result, session) =>{
+    session.send(`**${JSON.parse(result).joke}**`)
 }
 
 const descreverError = (session) => {

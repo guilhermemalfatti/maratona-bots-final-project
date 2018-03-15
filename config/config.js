@@ -1,5 +1,4 @@
 var config = module.exports = {};
-//var emotions = module.exports = {};
 
 config.birth_date = 1520468905945;
 
