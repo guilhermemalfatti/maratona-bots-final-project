@@ -5,6 +5,7 @@ var restify = require('restify');
 var builder = require('botbuilder');
 var config = require('./config/config');
 const recognizeEmotion = require('./manager/dialogs/recognize-emotion')
+const tellJoke = require('./manager/dialogs/tell-joke')
 var util = require('./manager/utils/utils');
  
 // Setup Restify Server
@@ -53,6 +54,11 @@ intents.matches('saudar', (session) =>{
 
 
 intents.matches('reconhecer-emocoes', recognizeEmotion);
+
+intents.matches('identificacao-piada', tellJoke);
+
+
+//intents.matches('despedida', tellJoke);
 
 
 intents.onDefault((session, args) => {
