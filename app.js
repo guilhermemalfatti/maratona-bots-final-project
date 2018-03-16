@@ -8,6 +8,7 @@ const recognizeEmotion = require('./manager/dialogs/recognize-emotion')
 const tellJoke = require('./manager/dialogs/tell-joke')
 const tellLastJoke = require('./manager/dialogs/tell-last-joke')
 const farewell = require('./manager/dialogs/farewell')
+const personalData = require('./manager/dialogs/personal-data')
 var util = require('./manager/utils/utils');
  
 // Setup Restify Server
@@ -29,31 +30,11 @@ const intents = new builder.IntentDialog({
     recognizers: [recognizer]
 })
 
-intents.matches('dados-pessoais', (session, args, next) =>{
-    if(args.entities.length > 0){
-        var message = "";
-        args.entities.forEach(function(value, index){
-            if(value.type == "nome"){
-                if(index > 0){
-                    message = message + " e "
-                }
-                message = message +  "Meu nome é **Bot**. ";
-            }else if(value.type == 'idade'){
-                var age = new Date().getTime() - config.birth_date;                
-                if(index > 0){
-                    message = message + " e "
-                }
-                message = message +  `Tenho **${age}** anos/dias de vida (formato em timestamp)`;
-            }
-        });
-    }
-    session.send(message);
-});
+intents.matches('dados-pessoais', personalData);
 
 intents.matches('saudar', (session) =>{
     session.send('Olá, em que posso lhe ajudar?');
 });
-
 
 intents.matches('reconhecer-emocoes', recognizeEmotion);
 
