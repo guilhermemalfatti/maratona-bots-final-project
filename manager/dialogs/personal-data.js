@@ -1,4 +1,5 @@
 const builder = require('botbuilder')
+var config = require('../../config/config')
 
 module.exports = [
     (session, args, next) => {

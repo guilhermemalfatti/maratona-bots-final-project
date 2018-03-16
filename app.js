@@ -3,7 +3,6 @@ require('dotenv-extended').load()
 
 var restify = require('restify');
 var builder = require('botbuilder');
-var config = require('./config/config');
 const recognizeEmotion = require('./manager/dialogs/recognize-emotion')
 const tellJoke = require('./manager/dialogs/tell-joke')
 const tellLastJoke = require('./manager/dialogs/tell-last-joke')
