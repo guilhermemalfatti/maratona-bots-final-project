@@ -6,6 +6,8 @@ var builder = require('botbuilder');
 var config = require('./config/config');
 const recognizeEmotion = require('./manager/dialogs/recognize-emotion')
 const tellJoke = require('./manager/dialogs/tell-joke')
+const tellLastJoke = require('./manager/dialogs/tell-last-joke')
+const farewell = require('./manager/dialogs/farewell')
 var util = require('./manager/utils/utils');
  
 // Setup Restify Server
@@ -57,9 +59,9 @@ intents.matches('reconhecer-emocoes', recognizeEmotion);
 
 intents.matches('identificacao-piada', tellJoke);
 
+intents.matches('identificacao-ultima-piada', tellLastJoke);
 
-//intents.matches('despedida', tellJoke);
-
+intents.matches('despedida', farewell);
 
 intents.onDefault((session, args) => {
     session.send(`Desculpe, não pude compreender **${session.message.text}**\n\nLembre-se que sou um bot e meu conhecimento é limitado.`)

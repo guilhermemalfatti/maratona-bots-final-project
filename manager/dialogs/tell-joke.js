@@ -29,6 +29,7 @@ module.exports = [
 callJoke = (session) =>{
     var joke = new AzureJoke()
     joke.get().then((resp)=>{
+        session.userData.lastJoke = JSON.parse(resp).joke
         session.send(`**${JSON.parse(resp).joke}**`)
     }).catch((resp)=>{
         descreverError(resp, session)
