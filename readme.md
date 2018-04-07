@@ -13,3 +13,5 @@
 If you have setup continuous integration, then your bot will automatically deployed when new changes are pushed to the source repository.
 
 
+Youtube video to presents the project:
+https://www.youtube.com/watch?v=hJfa3EAEubg&t=13s
